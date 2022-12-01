@@ -1,9 +1,10 @@
+import { getPageStaticInfo } from "next/dist/build/analysis/get-page-static-info";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import CustomInput from "../components/custom-input/CustomInput";
-import { mapHostToTenant } from "../utils";
+import { getPageInfo } from "../../utils";
 
-export default function HomePage({ tenantInfo }: any) {
-  const [search, setSearch] = useState("");
+export default function HomePage(props: any) {
+  console.log("props", props);
 
   return (
     <div
@@ -21,27 +22,13 @@ export default function HomePage({ tenantInfo }: any) {
         <a href="#">Login</a>
       </div>
       <div className="brand">
-        <h1>{tenantInfo?.config.CFG_SITE_NAME}</h1>
+        {/* <h1>{tenantInfo?.config.CFG_SITE_NAME}</h1> */}
       </div>
       <div className="container">
-        <div
-          style={{
-            width: "50%",
-            height: "175px",
-            marginTop: "120px",
-          }}
-        >
-          <div style={{ background: "whitesmoke", padding: "0 10px" }}>
-            <CustomInput
-              placeholder="Search"
-              isVisible
-              value={search}
-              onChange={(e: any) => setSearch(e.target.value)}
-            />
-          </div>
+        <div style={{ width: "50%", height: "175px", marginTop: "120px" }}>
           <div style={{ paddingTop: "8px" }}>
             <a href="/docs/search-guide?ln=en">Search Tips</a> ::{" "}
-            <a href="">Collections</a> :: <a href="/pages">Pages</a>
+            <a href="">Collections</a>
           </div>
         </div>
       </div>
@@ -52,9 +39,15 @@ export default function HomePage({ tenantInfo }: any) {
 export const getServerSideProps = async (context: any) => {
   const { req, query, res, asPath, pathname } = context;
   const { host } = req.headers;
+  console.log("query", query);
   return {
     props: {
-      tenantInfo: mapHostToTenant(host),
+      pageInfo: {
+        ...(await getPageInfo(host)),
+        name: query.name,
+        text: "Neki text",
+        title: "Neki Title",
+      },
     },
   };
 };
