@@ -23,6 +23,10 @@ export default function HomePage({ tenantInfo }: any) {
     history.back();
   }
 
+  function updateFormText(text: string) {
+    setForm({ ...form, text })
+  }
+
   return (
     <div
       style={{
@@ -62,9 +66,7 @@ export default function HomePage({ tenantInfo }: any) {
             <Editor
               style={{ height: "320px" }}
               value={form.text}
-              onTextChange={(e) =>
-                setForm({ ...form, text: e.htmlValue as any })
-              }
+              onTextChange={(e) => updateFormText(e.htmlValue as string)}
             />
           </div>
           <div className={styles.actions}>
