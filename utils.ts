@@ -19,7 +19,10 @@ export function mapHostToTenant(host: string) {
     }
     default: {
       return {
-        tenantId: "unknown"
+        tenantId: "unknown",
+        config: {
+          CFG_SITE_NAME: "unknown"
+        }
       };
     }
   }
