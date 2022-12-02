@@ -38,6 +38,7 @@ export const getServerSideProps = async (context: any) => {
 
   const fetchPage = async () => {
     const getPageResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages/" + query.name, { headers: { "TIND-TENANT-ID": "tind2-ante" } });
+    console.log("response", getPageResponse);
     const page = await getPageResponse.json();
     return page ? page : {};
   }
