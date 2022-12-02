@@ -1,5 +1,6 @@
 import { mapHostToTenant } from "../../utils";
 import styles from "./Pages.module.css";
+import { PagesTable } from './components/PagesTable.component';
 
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
@@ -33,49 +34,15 @@ export default function HomePage({ tenantInfo, pages }: any) {
       </div>
       <div className="container">
         <div className={styles.container}>
-          <div className={styles.col1}>
+          <div>
             <div style={{ marginBottom: "20px" }}>
               <h2 style={{ fontWeight: 100 }}>
-                Search and Browse Static Pages
+                Static Pages
               </h2>
+              <Button style={{ float: "right" }}>New Page</Button>
             </div>
-            <div>
-              {pages.map((_page: any) => {
-                return <a
-                  style={{ width: "100%" }}
-                  className={styles.pageLink + " p-button-info p-button-outlined"}
-                  href={"/pages/" + _page.name}
-                  target="_blank"
-                >{_page.name}</a>
-              })}
-            </div>
-          </div>
-          <div className={styles.col1}>
-            <div>
-              <a href="/pages/new-page" style={{ margin: 0 }}>
-                <Button
-                  style={{ width: "100%" }}
-                  label="Create new page"
-                  className="p-button-info"
-                  onClick={() => { }}
-                />
-              </a>
-            </div>
-            <div>
-              <h2
-                style={{ fontWeight: 100, marginTop: "10px", color: "#3B82F6" }}
-              >
-                Pages
-              </h2>
-              <div style={{ fontWeight: 100, marginTop: "10px" }}>
-                <text>
-                  Pages are different way to discover content. Instead of
-                  <br></br> browsing different categories and sub-categories,
-                  you <br></br> can create custom pages to suit your needs.
-                  Curators of<br></br> this repository have carefully put
-                  together content in a<br></br> meaningful way. Enjoy!
-                </text>
-              </div>
+            <div style={{ width: "100%" }}>
+              <PagesTable pages={pages}/>
             </div>
           </div>
         </div>
