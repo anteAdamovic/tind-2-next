@@ -28,7 +28,7 @@ export default function HomePage({ tenantInfo, pages }: any) {
         gridTemplateRows: "34px 200px 1fr",
       }}
     >
-       <div className="nav">
+      <div className="nav">
         <div style={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
           <a href="/">Search</a>
           <a href="/submit">Submit</a>
@@ -103,14 +103,21 @@ export const getServerSideProps = async (context: any) => {
   }
 
   const createNewPage = async () => {
-    await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages/", { 
-      method: 'POST',
-      body: JSON.stringify({
-        name: decodeURIComponent(query.title),
-        text: decodeURIComponent(query.text)
-      }),
-      headers: { "TIND-TENANT-ID": tenantInfo.tenantId } 
-    });
+    try {
+      const newPage = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages/", {
+        method: 'POST',
+        body: JSON.stringify({
+          name: decodeURIComponent(query.title),
+          text: decodeURIComponent(query.text)
+        }),
+        headers: { "TIND-TENANT-ID": tenantInfo.tenantId }
+      });
+      console.log("New page created!");
+      console.log(JSON.stringify(newPage));
+    } catch (e: any) {
+      console.log("Failed to create new page", e.message);
+      console.error(e);
+    }
   };
 
   if (query.title && query.text) {
