@@ -24,7 +24,7 @@ export default function HomePage({ tenantInfo, pageInfo }: any) {
         <h1>{tenantInfo?.config.CFG_SITE_NAME}</h1>
       </div>
       <div className="container">
-        <div style={{ "width": "70%" }}>
+        <div style={{ "width": "70%", "marginTop": "20px" }}>
           <h1>{pageInfo.name}</h1>
           <hr/>
           <p dangerouslySetInnerHTML={{ __html: pageInfo.text }} style={{"marginTop": "20px"}}></p>
