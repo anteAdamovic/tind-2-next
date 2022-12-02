@@ -19,6 +19,8 @@
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   padding: 16px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
 }
 
 .button {

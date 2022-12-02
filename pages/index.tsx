@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CustomInput from "../components/custom-input/CustomInput";
 import { mapHostToTenant } from "../utils";
-import "../styles/Home.module.css"
+import styles from "./Home.module.css"
 
 export default function HomePage({ tenantInfo }: any) {
   const [search, setSearch] = useState("");
@@ -24,7 +24,7 @@ export default function HomePage({ tenantInfo }: any) {
       <div className="brand">
         <h1>{tenantInfo?.config.CFG_SITE_NAME}</h1>
       </div>
-      <div className="container">
+      <div className={styles.container}>
         <div
           style={{
             width: "50%",
@@ -41,8 +41,8 @@ export default function HomePage({ tenantInfo }: any) {
             />
           </div>
           <div style={{ paddingTop: "8px" }}>
-            <a href="/docs/search-guide?ln=en">Search Tips</a> ::{" "}
-            <a href="">Collections</a> :: <a href="/pages">Pages</a>
+            <a className={styles.link} href="/docs/search-guide?ln=en">Search Tips</a> ::{" "}
+            <a className={styles.link} href="">Collections</a> :: <a className={styles.link} href="/pages">Pages</a>
           </div>
         </div>
       </div>

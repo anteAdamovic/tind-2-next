@@ -1,9 +1,13 @@
-.container2 {
+.container {
   padding: 0 2rem;
-  background-color: transparent !important;
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
 }
 
 .main {

@@ -15,9 +15,20 @@ export default function HomePage({ tenantInfo }: any) {
     text: "",
   });
 
-  const createNewPage = () => {
-
+  const createNewPage = async () => {
+    await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages/", { 
+      method: 'POST',
+      body: JSON.stringify({
+        name: form.title,
+        text: form.text
+      }),
+      headers: { "TIND-TENANT-ID": "tind2-ante" } 
+    });
   };
+
+  const goBack = () => {
+    history.back();
+  }
 
   return (
     <div
@@ -70,7 +81,7 @@ export default function HomePage({ tenantInfo }: any) {
                   style={{ width: "100%" }}
                   label="Cancel"
                   className="p-button-secondary"
-                  onClick={createNewPage}
+                  onClick={goBack}
                 />
               </a>
             </div>
