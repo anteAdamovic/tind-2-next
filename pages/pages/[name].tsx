@@ -36,8 +36,10 @@ export const getServerSideProps = async (context: any) => {
   const { req, query, res, asPath, pathname } = context;
   const { host } = req.headers;
 
+  const tenantInfo = mapHostToTenant(host);
+
   const fetchPage = async () => {
-    const getPageResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages/" + query.name, { headers: { "TIND-TENANT-ID": "tind2-ante" } });
+    const getPageResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages/" + query.name, { headers: { "TIND-TENANT-ID": tenantInfo.tenantId } });
     console.log("response", getPageResponse);
     const page = await getPageResponse.json();
     return page ? page : {};
@@ -47,7 +49,7 @@ export const getServerSideProps = async (context: any) => {
 
   return {
     props: {
-      tenantInfo: mapHostToTenant(host),
+      tenantInfo,
       pageInfo: {
         ...page
       },
