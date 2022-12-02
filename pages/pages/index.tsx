@@ -3,6 +3,7 @@ import styles from "./Pages.module.css";
 
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
+import { redirect } from "next/dist/server/api-utils";
 
 export default function HomePage({ tenantInfo, pages }: any) {
   const [_pages, setPages] = useState([]);
@@ -114,6 +115,7 @@ export const getServerSideProps = async (context: any) => {
 
   if (query.title && query.text) {
     await createNewPage();
+    redirect(context.res, "/pages");
   }
   const pages = await fetchPages();
 
