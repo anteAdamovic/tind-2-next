@@ -16,10 +16,10 @@ export default function HomePage({ tenantInfo }: any) {
     >
       <div className="nav">
         <div style={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
-          <a href="#">Search</a>
-          <a href="#">Submit</a>
+          <a href="/search">Search</a>
+          <a href="/submit">Submit</a>
         </div>
-        <a href="#">Login</a>
+        <a href="/youraccount/login">Login</a>
       </div>
       <div className="brand">
         <h1>{tenantInfo?.config.CFG_SITE_NAME}</h1>
@@ -53,9 +53,11 @@ export default function HomePage({ tenantInfo }: any) {
 export const getServerSideProps = async (context: any) => {
   const { req, query, res, asPath, pathname } = context;
   const { host } = req.headers;
+  const tenantInfo = mapHostToTenant(host);
+
   return {
     props: {
-      tenantInfo: mapHostToTenant(host),
+      tenantInfo,
     },
   };
 };

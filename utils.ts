@@ -18,7 +18,9 @@ export function mapHostToTenant(host: string) {
       };
     }
     default: {
-      return null;
+      return {
+        tenantId: "unknown"
+      };
     }
   }
 }

@@ -27,12 +27,12 @@ export default function HomePage({ tenantInfo, pages }: any) {
         gridTemplateRows: "34px 200px 1fr",
       }}
     >
-      <div className="nav">
+       <div className="nav">
         <div style={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
-          <a href="/">Search</a>
-          <a href="#">Submit</a>
+          <a href="/search">Search</a>
+          <a href="/submit">Submit</a>
         </div>
-        <a href="#">Login</a>
+        <a href="/youraccount/login">Login</a>
       </div>
       <div className="brand">
         <h1>{tenantInfo?.config.CFG_SITE_NAME}</h1>
@@ -94,18 +94,32 @@ export const getServerSideProps = async (context: any) => {
   const { req, query, res, asPath, pathname } = context;
   const { host } = req.headers;
 
-
+  const tenantInfo = mapHostToTenant(host);
   const fetchPages = async () => {
-    const getPagesResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages", { headers: { "TIND-TENANT-ID": "tind2-ante" } });
+    const getPagesResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages", { headers: { "TIND-TENANT-ID": tenantInfo.tenantId } });
     const pages = await getPagesResponse.json();
     return pages.items ? pages.items : [];
   }
 
+  const createNewPage = async () => {
+    await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages/", { 
+      method: 'POST',
+      body: JSON.stringify({
+        name: query.title,
+        text: decodeURIComponent(query.text)
+      }),
+      headers: { "TIND-TENANT-ID": tenantInfo.tenantId } 
+    });
+  };
+
+  if (query.title && query.text) {
+    await createNewPage();
+  }
   const pages = await fetchPages();
 
   return {
     props: {
-      tenantInfo: mapHostToTenant(host),
+      tenantInfo,
       pages
     },
   };

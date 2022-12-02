@@ -12,12 +12,12 @@ export default function HomePage({ tenantInfo, pageInfo }: any) {
         gridTemplateRows: "34px 200px 1fr",
       }}
     >
-      <div className="nav">
+       <div className="nav">
         <div style={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
-          <a href="#">Search</a>
-          <a href="#">Submit</a>
+          <a href="/search">Search</a>
+          <a href="/submit">Submit</a>
         </div>
-        <a href="#">Login</a>
+        <a href="/youraccount/login">Login</a>
       </div>
       <div className="brand">
         <h1>{tenantInfo?.config.CFG_SITE_NAME}</h1>
