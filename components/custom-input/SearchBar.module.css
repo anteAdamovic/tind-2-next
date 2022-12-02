@@ -1,6 +1,11 @@
 .form {
   width: 100%;
   display: flex;
+  padding: 0px 0px !important;
+}
+
+.form input {
+  margin: 0 !important;
 }
 
 .input {
@@ -13,7 +18,7 @@
   font-size: 18px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
-  margin-block: 10px;
+  padding: 16px;
 }
 
 .button {
@@ -27,5 +32,5 @@
   border-bottom-right-radius: 3px;
   border: none;
   cursor: pointer;
-  margin-block: 10px;
+  padding: 16px;
 }

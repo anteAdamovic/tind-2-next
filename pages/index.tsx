@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CustomInput from "../components/custom-input/CustomInput";
 import { mapHostToTenant } from "../utils";
+import "../styles/Home.module.css"
 
 export default function HomePage({ tenantInfo }: any) {
   const [search, setSearch] = useState("");
@@ -31,7 +32,7 @@ export default function HomePage({ tenantInfo }: any) {
             marginTop: "120px",
           }}
         >
-          <div style={{ background: "whitesmoke", padding: "0 10px" }}>
+          <div>
             <CustomInput
               placeholder="Search"
               isVisible

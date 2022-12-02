@@ -2,8 +2,23 @@ import { mapHostToTenant } from "../../utils";
 import styles from "./Pages.module.css";
 
 import { Button } from "primereact/button";
+import { useEffect, useState } from "react";
 
-export default function HomePage({ tenantInfo }: any) {
+export default function HomePage({ tenantInfo, pages }: any) {
+  const [_pages, setPages] = useState([]);
+
+  const fetchPages = async () => {
+    const getPagesResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages", { headers: { "TIND-TENANT-ID": tenantInfo.tenantId } });
+    console.log(getPagesResponse);
+    setPages(getPagesResponse.items);
+  }
+
+  console.log(pages);
+
+  // useEffect(() => {
+  //   fetchPages();
+  // }, []);
+
   return (
     <div
       style={{
@@ -31,12 +46,14 @@ export default function HomePage({ tenantInfo }: any) {
               </h2>
             </div>
             <div>
-              <Button
-                style={{ width: "100%" }}
-                label="Some page"
-                className="p-button-info p-button-outlined"
-                onClick={() => {}}
-              />
+              {pages.map((_page: any) => {
+                return <a
+                  style={{ width: "100%" }}
+                  className={styles.pageLink + " p-button-info p-button-outlined"}
+                  href={"/pages/" + _page.name}
+                  target="_blank"
+                >{_page.name}</a>
+              })}
             </div>
           </div>
           <div className={styles.col1}>
@@ -46,7 +63,7 @@ export default function HomePage({ tenantInfo }: any) {
                   style={{ width: "100%" }}
                   label="Create new page"
                   className="p-button-info"
-                  onClick={() => {}}
+                  onClick={() => { }}
                 />
               </a>
             </div>
@@ -76,9 +93,20 @@ export default function HomePage({ tenantInfo }: any) {
 export const getServerSideProps = async (context: any) => {
   const { req, query, res, asPath, pathname } = context;
   const { host } = req.headers;
+
+
+  const fetchPages = async () => {
+    const getPagesResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages", { headers: { "TIND-TENANT-ID": "tind2-ante" } });
+    const pages = await getPagesResponse.json();
+    return pages.items ? pages.items : [];
+  }
+
+  const pages = await fetchPages();
+
   return {
     props: {
       tenantInfo: mapHostToTenant(host),
+      pages
     },
   };
 };

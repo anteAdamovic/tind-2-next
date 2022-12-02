@@ -15,7 +15,9 @@ export default function HomePage({ tenantInfo }: any) {
     text: "",
   });
 
-  const createNewPage = () => {};
+  const createNewPage = () => {
+
+  };
 
   return (
     <div
@@ -42,15 +44,15 @@ export default function HomePage({ tenantInfo }: any) {
           </div>
           <div className={styles.inputs}>
             <CustomInput
-              placeholder="Title"
+              placeholder="Name"
               value={form.title}
               onChange={(e: any) => setForm({ ...form, title: e.target.value })}
             />
-            <CustomInput
+            {/* <CustomInput
               placeholder="Link"
               value={form.link}
               onChange={(e: any) => setForm({ ...form, link: e.target.value })}
-            />
+            /> */}
           </div>
           <div style={{ padding: "10px" }}>
             <Editor
@@ -67,7 +69,7 @@ export default function HomePage({ tenantInfo }: any) {
                 <Button
                   style={{ width: "100%" }}
                   label="Cancel"
-                  className="p-button-danger"
+                  className="p-button-secondary"
                   onClick={createNewPage}
                 />
               </a>
@@ -75,7 +77,7 @@ export default function HomePage({ tenantInfo }: any) {
             <div>
               <Button
                 style={{ width: "100%" }}
-                label="Create new"
+                label="Save"
                 className="p-button-info"
                 onClick={createNewPage}
               />

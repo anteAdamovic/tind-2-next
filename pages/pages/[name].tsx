@@ -1,11 +1,9 @@
 import { getPageStaticInfo } from "next/dist/build/analysis/get-page-static-info";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { getPageInfo } from "../../utils";
+import { getPageInfo, mapHostToTenant } from "../../utils";
 
-export default function HomePage(props: any) {
-  console.log("props", props);
-
+export default function HomePage({ tenantInfo, pageInfo }: any) {
   return (
     <div
       style={{
@@ -22,14 +20,12 @@ export default function HomePage(props: any) {
         <a href="#">Login</a>
       </div>
       <div className="brand">
-        {/* <h1>{tenantInfo?.config.CFG_SITE_NAME}</h1> */}
+        <h1>{tenantInfo?.config.CFG_SITE_NAME}</h1>
       </div>
       <div className="container">
-        <div style={{ width: "50%", height: "175px", marginTop: "120px" }}>
-          <div style={{ paddingTop: "8px" }}>
-            <a href="/docs/search-guide?ln=en">Search Tips</a> ::{" "}
-            <a href="">Collections</a>
-          </div>
+        <div>
+          <h1>{pageInfo.name}</h1>
+          <p>{pageInfo.text}</p>
         </div>
       </div>
     </div>
@@ -39,14 +35,20 @@ export default function HomePage(props: any) {
 export const getServerSideProps = async (context: any) => {
   const { req, query, res, asPath, pathname } = context;
   const { host } = req.headers;
-  console.log("query", query);
+
+  const fetchPage = async () => {
+    const getPageResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages/" + query.name, { headers: { "TIND-TENANT-ID": "tind2-ante" } });
+    const page = await getPageResponse.json();
+    return page ? page : {};
+  }
+
+  const page = await fetchPage();
+
   return {
     props: {
+      tenantInfo: mapHostToTenant(host),
       pageInfo: {
-        ...(await getPageInfo(host)),
-        name: query.name,
-        text: "Neki text",
-        title: "Neki Title",
+        ...page
       },
     },
   };
