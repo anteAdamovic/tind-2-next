@@ -1,4 +1,5 @@
 export function mapHostToTenant(host: string) {
+  console.log('host', host);
   switch (host) {
     case "localhost:5000": {
       return {
