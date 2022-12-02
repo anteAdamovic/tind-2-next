@@ -4,6 +4,7 @@ import { useState } from "react";
 import { getPageInfo, mapHostToTenant } from "../../utils";
 
 export default function HomePage({ tenantInfo, pageInfo }: any) {
+  console.log(pageInfo);
   return (
     <div
       style={{
