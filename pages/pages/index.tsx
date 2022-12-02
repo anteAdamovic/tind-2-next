@@ -105,7 +105,7 @@ export const getServerSideProps = async (context: any) => {
     await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages/", { 
       method: 'POST',
       body: JSON.stringify({
-        name: query.title,
+        name: decodeURIComponent(query.title),
         text: decodeURIComponent(query.text)
       }),
       headers: { "TIND-TENANT-ID": tenantInfo.tenantId } 

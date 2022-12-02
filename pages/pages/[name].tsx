@@ -25,7 +25,7 @@ export default function HomePage({ tenantInfo, pageInfo }: any) {
       <div className="container">
         <div>
           <h1>{pageInfo.name}</h1>
-          <p>{pageInfo.text}</p>
+          <p dangerouslySetInnerHTML={pageInfo.text}></p>
         </div>
       </div>
     </div>

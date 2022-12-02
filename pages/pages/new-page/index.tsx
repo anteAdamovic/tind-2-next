@@ -16,7 +16,7 @@ export default function HomePage({ tenantInfo }: any) {
   });
 
   const createNewPage = () => {
-    location.href = `/pages?title=${form.title}&text=${form.text}`;    
+    location.href = `/pages?title=${encodeURIComponent(form.title)}&text=${encodeURIComponent(form.text)}`;    
   };
 
   const goBack = () => {
