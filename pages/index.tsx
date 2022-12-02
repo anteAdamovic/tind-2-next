@@ -16,7 +16,7 @@ export default function HomePage({ tenantInfo }: any) {
     >
       <div className="nav">
         <div style={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
-          <a href="/search">Search</a>
+          <a href="/">Search</a>
           <a href="/submit">Submit</a>
         </div>
         <a href="/youraccount/login">Login</a>
