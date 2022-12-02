@@ -9,22 +9,15 @@ import styles from "./NewPage.module.css";
 import CustomInput from "../../../components/custom-input/CustomInput";
 
 export default function HomePage({ tenantInfo }: any) {
-  const [form, setForm] = useState({
-    title: "",
-    link: "",
-    text: "",
-  });
+  const [name, setName] = useState("");
+  const [text, setText] = useState("");
 
   const createNewPage = () => {
-    location.href = `/pages?title=${encodeURIComponent(form.title)}&text=${encodeURIComponent(form.text)}`;    
+    location.href = `/pages?title=${encodeURIComponent(name)}&text=${encodeURIComponent(text)}`;    
   };
 
   const goBack = () => {
     history.back();
-  }
-
-  function updateFormText(text: string) {
-    setForm({ ...form, text })
   }
 
   return (
@@ -53,8 +46,8 @@ export default function HomePage({ tenantInfo }: any) {
           <div className={styles.inputs}>
             <CustomInput
               placeholder="Name"
-              value={form.title}
-              onChange={(e: any) => setForm({ ...form, title: e.target.value })}
+              value={name}
+              onChange={(e: any) => setName(e.target.value)}
             />
             {/* <CustomInput
               placeholder="Link"
@@ -65,8 +58,8 @@ export default function HomePage({ tenantInfo }: any) {
           <div style={{ padding: "10px" }}>
             <Editor
               style={{ height: "320px" }}
-              value={form.text}
-              onTextChange={(e) => updateFormText(e.htmlValue as string)}
+              value={text}
+              onTextChange={(e) => setText(e.htmlValue as string)}
             />
           </div>
           <div className={styles.actions}>
