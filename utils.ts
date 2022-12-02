@@ -17,6 +17,30 @@ export function mapHostToTenant(host: string) {
         },
       };
     }
+    case "tind2-qa.tind.io": {
+      return {
+        tenantId: "tind2-qa",
+        config: {
+          CFG_SITE_NAME: "TIND QA",
+        },
+      };
+    }
+    case "tind2-ante.tind.io": {
+      return {
+        tenantId: "tind2-ante",
+        config: {
+          CFG_SITE_NAME: "TIND Ante",
+        },
+      };
+    }
+    case "tind2-test.tind.io": {
+      return {
+        tenantId: "tind2-test",
+        config: {
+          CFG_SITE_NAME: "TIND Test",
+        },
+      };
+    }
     default: {
       return {
         tenantId: "unknown",
