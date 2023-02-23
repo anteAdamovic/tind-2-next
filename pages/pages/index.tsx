@@ -2,18 +2,13 @@ import { mapHostToTenant } from "../../utils";
 import styles from "./Pages.module.css";
 import { PagesTable } from './components/PagesTable.component';
 
-import { Button } from "primereact/button";
-import { useEffect, useState } from "react";
+import { Button } from "@tindtechnologies/tind-components/components/Button";
 import { redirect } from "next/dist/server/api-utils";
 
 export default function HomePage({ tenantInfo, pages }: any) {
-  const [_pages, setPages] = useState([]);
-
-  const fetchPages = async () => {
-    const getPagesResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages", { headers: { "TIND-TENANT-ID": tenantInfo.tenantId } });
-    setPages(getPagesResponse.items);
+  const newPage = () => {
+    location.href = "/pages/new-page/";
   }
-
   return (
     <div
       style={{
@@ -21,6 +16,7 @@ export default function HomePage({ tenantInfo, pages }: any) {
         display: "grid",
         gridTemplateRows: "34px 200px 1fr",
       }}
+      className="pages"
     >
       <div className="nav">
         <div style={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
@@ -35,11 +31,11 @@ export default function HomePage({ tenantInfo, pages }: any) {
       <div className="container">
         <div className={styles.container}>
           <div>
-            <div style={{ marginBottom: "20px" }}>
-              <h2 style={{ fontWeight: 100 }}>
+            <div style={{ marginBottom: "20px" }} className="pages-header">
+              <h1 style={{ fontWeight: 100, display: "inline-block" }}>
                 Static Pages
-              </h2>
-              <Button style={{ float: "right" }}>New Page</Button>
+              </h1>
+              <Button size="small" label="New Page" onClick={newPage}></Button>
             </div>
             <div style={{ width: "100%" }}>
               <PagesTable pages={pages}/>

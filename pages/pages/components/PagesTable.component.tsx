@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Column } from '@tindtechnologies/tind-components';
+import { Table, Column, Button, ButtonSet } from '@tindtechnologies/tind-components';
 
 export interface Page {
     id: string;
@@ -12,15 +12,13 @@ export interface Page {
 }
 
 export interface PagesTableProps {
-    pages: Page[]; 
+    pages: Page[];
 }
 
 export const PagesTable = ({
     pages
 }: PagesTableProps) => {
-    const [selection, setSelection] = useState([]);
-    console.log(JSON.stringify(pages));
-
+    const [selection, setSelection] = useState<any>(null);
     const data = pages.map(page => {
         return {
             ...page,
@@ -31,16 +29,38 @@ export const PagesTable = ({
             language: 'English'
         }
     })
+
+    const viewPage = () => {
+        window.open("/pages/" + selection.name, "_blank");
+    }
+
+    const editPage = () => {
+        window.open("/pages/edit/" + selection.name, "_blank");
+    }
+
+    const publishPage = () => {
+        window.open("/pages/publish/" + selection.name, "_blank");
+    }
+
     return (
         <>
-            <Table data={data} selection={selection} onSelectionChange={(e: any) => setSelection(e.value)}>
-                <Column selectionMode="multiple"></Column>
+            <Table data={data} selectionMode="single" selection={selection} onSelectionChange={(e) => {
+                setSelection(e.value);
+            }}>
                 <Column field="name" header="Name" />
                 <Column field="content" header="Content" />
                 <Column field="language" header="Language" />
                 <Column field="createdAt" header="Created" />
                 <Column field="modifiedAt" header="Modified" />
                 <Column field="status" header="Status" />
+                <Column body={
+                    <ButtonSet className="m-w-400">
+                        <Button type="primary" label="View" icon='pi pi-eye' size="small" outlined={true} onClick={viewPage}></Button>
+                        <Button type="primary" label="Edit" icon='pi pi-pencil' size="small" outlined={true} onClick={editPage}></Button>
+                        <Button type="primary" label="Delete" icon="pi pi-trash" size="small" outlined={true}></Button>
+                        <Button type="primary" label="Unpublish" icon="pi pi-file-excel" size="small" outlined={true} onClick={publishPage}></Button>
+                    </ButtonSet>
+                }></Column>
             </Table>
         </>
     );
