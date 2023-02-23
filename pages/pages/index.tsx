@@ -10,15 +10,8 @@ export default function HomePage({ tenantInfo, pages }: any) {
 
   const fetchPages = async () => {
     const getPagesResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages", { headers: { "TIND-TENANT-ID": tenantInfo.tenantId } });
-    console.log(getPagesResponse);
     setPages(getPagesResponse.items);
   }
-
-  console.log(pages);
-
-  // useEffect(() => {
-  //   fetchPages();
-  // }, []);
 
   return (
     <div
