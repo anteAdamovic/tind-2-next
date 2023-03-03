@@ -48,11 +48,6 @@ export default function HomePage({ tenantInfo }: any) {
               value={name}
               onChange={(e: any) => setName(e.target.value)}
             />
-            {/* <CustomInput
-              placeholder="Link"
-              value={form.link}
-              onChange={(e: any) => setForm({ ...form, link: e.target.value })}
-            /> */}
           </div>
           <div style={{ padding: "10px" }}>
             <Editor

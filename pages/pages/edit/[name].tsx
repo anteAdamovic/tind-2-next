@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { mapHostToTenant } from "../../../utils";
 import { Editor, Button, InputText } from "@tindtechnologies/tind-components/components";
 
 //editor theme
 import "primereact/resources/primereact.min.css";
-import styles from "./NewPage.module.css";
+import styles from "./EditPage.module.css";
 import CustomInput from "../../../components/custom-input/CustomInput";
 
-export default function HomePage({ tenantInfo }: any) {
+export default function HomePage({ tenantInfo, pageInfo }: any) {
   const [name, setName] = useState("");
   const [text, setText] = useState("");
 
@@ -18,6 +18,14 @@ export default function HomePage({ tenantInfo }: any) {
   const goBack = () => {
     history.back();
   }
+
+  console.log(pageInfo);
+  useEffect(() => {
+    setName(pageInfo.name);
+    setText(pageInfo.text);
+  }, []); 
+
+  console.log(name, text);
 
   return (
     <div
@@ -40,7 +48,7 @@ export default function HomePage({ tenantInfo }: any) {
       <div className="container">
         <div className={styles.container}>
           <div style={{ marginBottom: "10px", padding: "0 10px" }}>
-            <h2 style={{ fontWeight: 100 }}>Create new page</h2>
+            <h2 style={{ fontWeight: 100 }}>Edit page</h2>
           </div>
           <div className={styles.inputs}>
             <CustomInput
@@ -89,9 +97,23 @@ export default function HomePage({ tenantInfo }: any) {
 export const getServerSideProps = async (context: any) => {
   const { req, query, res, asPath, pathname } = context;
   const { host } = req.headers;
+  const tenantInfo = mapHostToTenant(host);
+
+  const fetchPage = async () => {
+    const getPageResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages/" + query.name, { headers: { "TIND-TENANT-ID": tenantInfo.tenantId } });
+    console.log("response", getPageResponse);
+    const page = await getPageResponse.json();
+    return page ? page : {};
+  }
+
+  const page = await fetchPage();
+
   return {
     props: {
-      tenantInfo: mapHostToTenant(host),
+      pageInfo: {
+        ...page
+      },
+      tenantInfo,
     },
   };
 };
