@@ -19,13 +19,12 @@ export default function HomePage({ tenantInfo, pageInfo }: any) {
     history.back();
   }
 
-  console.log(pageInfo);
-  useEffect(() => {
-    setName(pageInfo.name);
-    setText(pageInfo.text);
-  }, []); 
-
-  console.log(name, text);
+  setTimeout(() => {
+    if (!name && !text) {
+      setName(pageInfo.name);
+      setText(pageInfo.text);
+    }
+  }, 500);
 
   return (
     <div
@@ -56,11 +55,6 @@ export default function HomePage({ tenantInfo, pageInfo }: any) {
               value={name}
               onChange={(e: any) => setName(e.target.value)}
             />
-            {/* <CustomInput
-              placeholder="Link"
-              value={form.link}
-              onChange={(e: any) => setForm({ ...form, link: e.target.value })}
-            /> */}
           </div>
           <div style={{ padding: "10px" }}>
             <Editor

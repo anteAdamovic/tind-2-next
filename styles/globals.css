@@ -155,7 +155,7 @@ body {
   margin-top: 24px;
 }
 
-.pages .p-highlight {
+.pages .p-highlight:not(.p-checkbox-box) {
   background: unset !important;
   color: unset !important;
 }
