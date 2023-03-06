@@ -1,18 +1,14 @@
 import { mapHostToTenant } from "../../utils";
 import styles from "./Pages.module.css";
+import { PagesTable } from './components/PagesTable.component';
 
-import { Button } from "primereact/button";
-import { useEffect, useState } from "react";
+import { Button } from "@tindtechnologies/tind-components/components/Button";
 import { redirect } from "next/dist/server/api-utils";
 
 export default function HomePage({ tenantInfo, pages }: any) {
-  const [_pages, setPages] = useState([]);
-
-  const fetchPages = async () => {
-    const getPagesResponse: any = await fetch("https://6ayskb90d7.execute-api.eu-west-1.amazonaws.com/Prod/api-pages", { headers: { "TIND-TENANT-ID": tenantInfo.tenantId } });
-    setPages(getPagesResponse.items);
+  const newPage = () => {
+    location.href = "/pages/new-page/";
   }
-
   return (
     <div
       style={{
@@ -20,6 +16,7 @@ export default function HomePage({ tenantInfo, pages }: any) {
         display: "grid",
         gridTemplateRows: "34px 200px 1fr",
       }}
+      className="pages"
     >
       <div className="nav">
         <div style={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
@@ -33,49 +30,15 @@ export default function HomePage({ tenantInfo, pages }: any) {
       </div>
       <div className="container">
         <div className={styles.container}>
-          <div className={styles.col1}>
-            <div style={{ marginBottom: "20px" }}>
-              <h2 style={{ fontWeight: 100 }}>
-                Search and Browse Static Pages
-              </h2>
+          <div>
+            <div style={{ marginBottom: "20px" }} className="pages-header">
+              <h1 style={{ fontWeight: 100, display: "inline-block" }}>
+                Static Pages
+              </h1>
+              <Button size="small" label="New Page" onClick={newPage}></Button>
             </div>
-            <div>
-              {pages.map((_page: any) => {
-                return <a
-                  style={{ width: "100%" }}
-                  className={styles.pageLink + " p-button-info p-button-outlined"}
-                  href={"/pages/" + _page.name}
-                  target="_blank"
-                >{_page.name}</a>
-              })}
-            </div>
-          </div>
-          <div className={styles.col1}>
-            <div>
-              <a href="/pages/new-page" style={{ margin: 0 }}>
-                <Button
-                  style={{ width: "100%" }}
-                  label="Create new page"
-                  className="p-button-info"
-                  onClick={() => { }}
-                />
-              </a>
-            </div>
-            <div>
-              <h2
-                style={{ fontWeight: 100, marginTop: "10px", color: "#3B82F6" }}
-              >
-                Pages
-              </h2>
-              <div style={{ fontWeight: 100, marginTop: "10px" }}>
-                <text>
-                  Pages are different way to discover content. Instead of
-                  <br></br> browsing different categories and sub-categories,
-                  you <br></br> can create custom pages to suit your needs.
-                  Curators of<br></br> this repository have carefully put
-                  together content in a<br></br> meaningful way. Enjoy!
-                </text>
-              </div>
+            <div style={{ width: "100%" }}>
+              <PagesTable pages={pages}/>
             </div>
           </div>
         </div>

@@ -1,7 +1,11 @@
-import { mapHostToTenant } from "../../utils";
+import { Button } from "@tindtechnologies/tind-components/components";
+import { mapHostToTenant } from "../../../utils";
 
 export default function HomePage({ tenantInfo, pageInfo }: any) {
-  console.log(pageInfo);
+  const goBack = () => {
+    history.back();
+  };
+
   return (
     <div
       style={{
@@ -10,7 +14,7 @@ export default function HomePage({ tenantInfo, pageInfo }: any) {
         gridTemplateRows: "34px 200px 1fr",
       }}
     >
-       <div className="nav">
+      <div className="nav">
         <div style={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
           <a href="/">Search</a>
           <a href="/submit">Submit</a>
@@ -23,8 +27,18 @@ export default function HomePage({ tenantInfo, pageInfo }: any) {
       <div className="container">
         <div style={{ "width": "70%", "marginTop": "20px" }}>
           <h1>{pageInfo.name}</h1>
-          <hr/>
-          <p dangerouslySetInnerHTML={{ __html: pageInfo.text }} style={{"marginTop": "20px"}}></p>
+          <hr />
+          <p dangerouslySetInnerHTML={{ __html: pageInfo.text }} style={{ "marginTop": "20px" }}></p>
+
+          <div style={{ marginTop: "16px" }}>
+            <span style={{ marginRight: "8px" }}>
+              <Button type="primary" label="Back to table" onClick={goBack} outlined={true}></Button>
+            </span>
+            <Button icon="pi pi-check" type="primary" label="Publish"></Button>
+            <span style={{ "float": "right" }}>
+              <Button type="danger" label="Delete"></Button>
+            </span>
+          </div>
         </div>
       </div>
     </div>
